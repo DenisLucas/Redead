@@ -1,0 +1,116 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://actors/Player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scripts/scenecontroler.gd" type="Script" id=2]
+[ext_resource path="res://sprites/places/random building.png" type="Texture" id=3]
+[ext_resource path="res://Hud/LAinterface.tscn" type="PackedScene" id=4]
+
+[sub_resource type="ConvexPolygonShape2D" id=1]
+points = PoolVector2Array( 0, 0, 192, 0, 192, 180, 0, 180 )
+
+[sub_resource type="TileSet" id=2]
+0/name = "random building.png 0"
+0/texture = ExtResource( 3 )
+0/tex_offset = Vector2( 0, 0 )
+0/modulate = Color( 1, 1, 1, 1 )
+0/region = Rect2( 0, 0, 192, 180 )
+0/tile_mode = 0
+0/occluder_offset = Vector2( 0, 0 )
+0/navigation_offset = Vector2( 0, 0 )
+0/shape_offset = Vector2( 0, 0 )
+0/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+0/shape = SubResource( 1 )
+0/shape_one_way = false
+0/shape_one_way_margin = 1.0
+0/shapes = [ {
+"autotile_coord": Vector2( 0, 0 ),
+"one_way": false,
+"one_way_margin": 1.0,
+"shape": SubResource( 1 ),
+"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
+} ]
+0/z_index = 0
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="enemyspawn" type="Position2D" parent="."]
+position = Vector2( 42.3785, 42.3785 )
+
+[node name="enemyspawn2" type="Position2D" parent="."]
+position = Vector2( 879.354, 42.3785 )
+
+[node name="enemyspawn4" type="Position2D" parent="."]
+position = Vector2( 33.7993, 499.933 )
+
+[node name="enemyspawn5" type="Position2D" parent="."]
+position = Vector2( 876.777, 505.908 )
+
+[node name="spawn timer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
+[node name="wavetimer" type="Timer" parent="."]
+wait_time = 30.0
+one_shot = true
+autostart = true
+
+[node name="TileMap" type="TileMap" parent="." groups=[
+"wall",
+]]
+tile_set = SubResource( 2 )
+cell_size = Vector2( 180, 180 )
+collision_layer = 8
+collision_mask = 7
+format = 1
+tile_data = PoolIntArray( -65536, -2147483648, 0, -65535, -2147483648, 0, -65534, -2147483648, 0, -65533, -2147483648, 0, -65532, -2147483648, 0, 65535, 1073741824, 0, 5, 536870912, 0, 131071, 1073741824, 0, 65537, 536870912, 0, 65539, 0, 0, 65541, 536870912, 0, 196607, 1073741824, 0, 131077, 536870912, 0, 196608, -536870912, 0, 196609, -536870912, 0, 196610, -536870912, 0, 196611, -536870912, 0, 196612, -536870912, 0 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2( 475.584, 259.089 )
+current = true
+zoom = Vector2( 0.5, 0.5 )
+
+[node name="Control" parent="Camera2D" instance=ExtResource( 4 )]
+margin_left = -239.0
+margin_top = -137.0
+margin_right = 238.0
+margin_bottom = 134.0
+
+[node name="Player" parent="." instance=ExtResource( 1 )]
+position = Vector2( 506.308, 263.327 )
+
+[node name="timeOut" type="Timer" parent="Player"]
+wait_time = 0.5
+one_shot = true
+
+[node name="iten spawn" type="Position2D" parent="."]
+position = Vector2( 469.171, 249.064 )
+
+[node name="iten spawn2" type="Position2D" parent="."]
+position = Vector2( 478.151, 507.23 )
+
+[node name="iten spawn3" type="Position2D" parent="."]
+position = Vector2( 471.023, 58.2169 )
+
+[node name="iten spawn4" type="Position2D" parent="."]
+position = Vector2( 827.383, 279.16 )
+
+[node name="iten spawn5" type="Position2D" parent="."]
+position = Vector2( 61.21, 261.342 )
+
+[node name="ammospawn" type="Timer" parent="."]
+wait_time = 5.0
+autostart = true
+__meta__ = {
+"_editor_description_": "a"
+}
+
+[node name="Itempos" type="Timer" parent="."]
+wait_time = 60.0
+autostart = true
+[connection signal="timeout" from="spawn timer" to="." method="_on_spawn_timer_timeout"]
+[connection signal="timeout" from="wavetimer" to="." method="_on_wavetimer_timeout"]
+[connection signal="fire" from="Player" to="." method="_on_Player_fire"]
+[connection signal="timeout" from="Player/timeOut" to="." method="_on_timeOut_timeout"]
+[connection signal="timeout" from="ammospawn" to="." method="_on_ammospawn_timeout"]
+[connection signal="timeout" from="Itempos" to="." method="_on_Itempos_timeout"]
