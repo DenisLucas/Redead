@@ -6,7 +6,7 @@ export (float, 0.0, 1.0) var acceleracao = 0.0
 export (float, 0.0, 1.0) var atrito = 0.0
 var shootA = true
 var move = Vector2.ZERO
-var life = 10
+var life = 5
 
 
 

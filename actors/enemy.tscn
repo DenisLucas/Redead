@@ -3,10 +3,10 @@
 [ext_resource path="res://scripts/enemy.gd" type="Script" id=1]
 [ext_resource path="res://sprites/enemies/normalzombS.png" type="Texture" id=2]
 
-[sub_resource type="CircleShape2D" id=2]
+[sub_resource type="CircleShape2D" id=1]
 radius = 20.3861
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=2]
 resource_name = "damage"
 length = 0.5
 tracks/0/type = "value"
@@ -34,7 +34,7 @@ tracks/1/keys = {
 "values": [ false, true, true, false ]
 }
 
-[sub_resource type="CircleShape2D" id=5]
+[sub_resource type="CircleShape2D" id=3]
 radius = 92.9065
 
 [sub_resource type="RectangleShape2D" id=4]
@@ -49,7 +49,7 @@ __meta__ = {
 "_edit_group_": true
 }
 speed = 150
-boostspeed = 250
+boostspeed = 200
 acceleracao = 1.0
 
 [node name="Sprite" type="Sprite" parent="."]
@@ -61,10 +61,10 @@ collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="detectarea"]
 position = Vector2( -0.166855, 0.33371 )
-shape = SubResource( 2 )
+shape = SubResource( 1 )
 
 [node name="attacktimer" type="Timer" parent="detectarea"]
-wait_time = 0.1
+wait_time = 0.3
 one_shot = true
 
 [node name="HitArea" type="Area2D" parent="."]
@@ -74,17 +74,17 @@ collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitArea"]
 position = Vector2( -0.166855, 0.33371 )
-shape = SubResource( 2 )
+shape = SubResource( 1 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="HitArea"]
-anims/damage = SubResource( 3 )
+anims/damage = SubResource( 2 )
 
 [node name="boostArea" type="Area2D" parent="."]
 collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="boostArea"]
 position = Vector2( -0.166855, 0.33371 )
-shape = SubResource( 5 )
+shape = SubResource( 3 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 4 )

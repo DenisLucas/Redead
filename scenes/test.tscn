@@ -1,9 +1,14 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://actors/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scripts/scenecontroler.gd" type="Script" id=2]
 [ext_resource path="res://sprites/places/random building.png" type="Texture" id=3]
 [ext_resource path="res://Hud/LAinterface.tscn" type="PackedScene" id=4]
+[ext_resource path="res://sound/Disparo.wav" type="AudioStream" id=5]
+[ext_resource path="res://sound/No_Ammo.wav" type="AudioStream" id=6]
+[ext_resource path="res://scenes/GameOver.tscn" type="PackedScene" id=7]
+[ext_resource path="res://sound/breathing.wav" type="AudioStream" id=8]
+[ext_resource path="res://sound/Moan.wav" type="AudioStream" id=9]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 points = PoolVector2Array( 0, 0, 192, 0, 192, 180, 0, 180 )
@@ -55,7 +60,14 @@ wait_time = 30.0
 one_shot = true
 autostart = true
 
-[node name="TileMap" type="TileMap" parent="." groups=[
+[node name="Player" parent="." instance=ExtResource( 1 )]
+position = Vector2( 506.308, 263.327 )
+
+[node name="timeOut" type="Timer" parent="Player"]
+wait_time = 0.3
+one_shot = true
+
+[node name="building" type="TileMap" parent="." groups=[
 "wall",
 ]]
 tile_set = SubResource( 2 )
@@ -64,24 +76,6 @@ collision_layer = 8
 collision_mask = 7
 format = 1
 tile_data = PoolIntArray( -65536, -2147483648, 0, -65535, -2147483648, 0, -65534, -2147483648, 0, -65533, -2147483648, 0, -65532, -2147483648, 0, 65535, 1073741824, 0, 5, 536870912, 0, 131071, 1073741824, 0, 65537, 536870912, 0, 65539, 0, 0, 65541, 536870912, 0, 196607, 1073741824, 0, 131077, 536870912, 0, 196608, -536870912, 0, 196609, -536870912, 0, 196610, -536870912, 0, 196611, -536870912, 0, 196612, -536870912, 0 )
-
-[node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2( 475.584, 259.089 )
-current = true
-zoom = Vector2( 0.5, 0.5 )
-
-[node name="Control" parent="Camera2D" instance=ExtResource( 4 )]
-margin_left = -239.0
-margin_top = -137.0
-margin_right = 238.0
-margin_bottom = 134.0
-
-[node name="Player" parent="." instance=ExtResource( 1 )]
-position = Vector2( 506.308, 263.327 )
-
-[node name="timeOut" type="Timer" parent="Player"]
-wait_time = 0.5
-one_shot = true
 
 [node name="iten spawn" type="Position2D" parent="."]
 position = Vector2( 469.171, 249.064 )
@@ -106,7 +100,50 @@ __meta__ = {
 }
 
 [node name="Itempos" type="Timer" parent="."]
-wait_time = 60.0
+wait_time = 50.0
+autostart = true
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2( 475.584, 259.089 )
+current = true
+zoom = Vector2( 0.5, 0.5 )
+
+[node name="Control" parent="Camera2D" instance=ExtResource( 4 )]
+margin_left = -239.0
+margin_top = -137.0
+margin_right = 238.0
+margin_bottom = 134.0
+
+[node name="Gover" parent="Camera2D" instance=ExtResource( 7 )]
+visible = false
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = -99.5338
+margin_top = -46.6171
+margin_right = -99.5338
+margin_bottom = -46.6171
+
+[node name="fire" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 5 )
+volume_db = 2.0
+
+[node name="Moan" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 9 )
+volume_db = 2.0
+
+[node name="empty" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 6 )
+
+[node name="breathing" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 8 )
+volume_db = 2.0
+
+[node name="Timer" type="Timer" parent="breathing"]
+wait_time = 5.0
+autostart = true
+
+[node name="Moantimer" type="Timer" parent="breathing"]
+wait_time = 20.0
 autostart = true
 [connection signal="timeout" from="spawn timer" to="." method="_on_spawn_timer_timeout"]
 [connection signal="timeout" from="wavetimer" to="." method="_on_wavetimer_timeout"]
@@ -114,3 +151,5 @@ autostart = true
 [connection signal="timeout" from="Player/timeOut" to="." method="_on_timeOut_timeout"]
 [connection signal="timeout" from="ammospawn" to="." method="_on_ammospawn_timeout"]
 [connection signal="timeout" from="Itempos" to="." method="_on_Itempos_timeout"]
+[connection signal="timeout" from="breathing/Timer" to="." method="_on_Timer_timeout"]
+[connection signal="timeout" from="breathing/Moantimer" to="." method="_on_Moantimer_timeout"]

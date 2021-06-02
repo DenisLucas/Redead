@@ -5,10 +5,11 @@
 [ext_resource path="res://sprites/itens/ammo.png" type="Texture" id=3]
 
 [node name="Ammo" instance=ExtResource( 1 )]
+position = Vector2( -0.420444, 0.105112 )
 script = ExtResource( 2 )
 
-[node name="CollisionShape2D" parent="." index="0"]
-position = Vector2( -0.315336, -1.15623 )
-
-[node name="Sprite" parent="." index="1"]
+[node name="Sprite" parent="." index="0"]
 texture = ExtResource( 3 )
+
+[node name="CollisionShape2D" parent="." index="1"]
+position = Vector2( 1.66893e-06, -1.15622 )

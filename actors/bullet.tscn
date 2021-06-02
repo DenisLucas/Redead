@@ -4,23 +4,23 @@
 [ext_resource path="res://sprites/guns/bullet.png" type="Texture" id=2]
 [ext_resource path="res://sprites/effects/flash.png" type="Texture" id=3]
 
-[sub_resource type="CircleShape2D" id=1]
-radius = 2.06347
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 1.74662, 5.24204 )
 
-[sub_resource type="CircleShape2D" id=2]
-radius = 1.60369
+[sub_resource type="RectangleShape2D" id=6]
+extents = Vector2( 1.39025, 4.68523 )
 
-[sub_resource type="AtlasTexture" id=4]
+[sub_resource type="AtlasTexture" id=3]
 atlas = ExtResource( 2 )
 region = Rect2( 32, 0, 32, 32 )
 
-[sub_resource type="AtlasTexture" id=5]
+[sub_resource type="AtlasTexture" id=4]
 atlas = ExtResource( 2 )
 region = Rect2( 64, 0, 32, 32 )
 
-[sub_resource type="SpriteFrames" id=3]
+[sub_resource type="SpriteFrames" id=5]
 animations = [ {
-"frames": [ SubResource( 4 ), SubResource( 5 ) ],
+"frames": [ SubResource( 3 ), SubResource( 4 ) ],
 "loop": false,
 "name": "default",
 "speed": 8.0
@@ -30,34 +30,35 @@ animations = [ {
 collision_layer = 4
 collision_mask = 2
 script = ExtResource( 1 )
-speed = 600
+speed = 900
 
 [node name="Sprite" type="Sprite" parent="."]
 scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 2 )
 hframes = 3
 
-[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
-
 [node name="Area2D" type="Area2D" parent="."]
 collision_layer = 4
 collision_mask = 2147483656
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2( 0.278406, 0.389768 )
 shape = SubResource( 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource( 2 )
+position = Vector2( 0.284481, 0.595275 )
+shape = SubResource( 6 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+visible = false
 position = Vector2( -0.23597, 4.01147 )
-frames = SubResource( 3 )
+frames = SubResource( 5 )
 
 [node name="Light2D" type="Light2D" parent="AnimatedSprite"]
+visible = false
 position = Vector2( 0.630672, -10.5112 )
 enabled = false
 texture = ExtResource( 3 )
 color = Color( 0.639216, 1, 0, 1 )
-[connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]
 [connection signal="body_entered" from="Area2D" to="." method="_on_Area2D_body_entered"]
 [connection signal="animation_finished" from="AnimatedSprite" to="." method="_on_AnimatedSprite_animation_finished"]
