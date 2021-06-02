@@ -92,7 +92,6 @@ atrito = 0.5
 visible = false
 frames = SubResource( 11 )
 animation = "Move-V"
-frame = 1
 playing = true
 
 [node name="PlayerSkin" type="Sprite" parent="."]

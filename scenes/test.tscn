@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://actors/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scripts/scenecontroler.gd" type="Script" id=2]
@@ -9,6 +9,9 @@
 [ext_resource path="res://scenes/GameOver.tscn" type="PackedScene" id=7]
 [ext_resource path="res://sound/breathing.wav" type="AudioStream" id=8]
 [ext_resource path="res://sound/Moan.wav" type="AudioStream" id=9]
+[ext_resource path="res://sound/Reloading.wav" type="AudioStream" id=10]
+[ext_resource path="res://sound/Bite.wav" type="AudioStream" id=11]
+[ext_resource path="res://sprites/effects/aim.png" type="Texture" id=12]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 points = PoolVector2Array( 0, 0, 192, 0, 192, 180, 0, 180 )
@@ -127,12 +130,19 @@ margin_bottom = -46.6171
 stream = ExtResource( 5 )
 volume_db = 2.0
 
+[node name="reload" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 10 )
+volume_db = -11.064
+
 [node name="Moan" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 9 )
 volume_db = 2.0
 
 [node name="empty" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 6 )
+
+[node name="Bite" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 11 )
 
 [node name="breathing" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 8 )
@@ -143,8 +153,11 @@ wait_time = 5.0
 autostart = true
 
 [node name="Moantimer" type="Timer" parent="breathing"]
-wait_time = 20.0
+wait_time = 10.0
 autostart = true
+
+[node name="aim" type="Sprite" parent="."]
+texture = ExtResource( 12 )
 [connection signal="timeout" from="spawn timer" to="." method="_on_spawn_timer_timeout"]
 [connection signal="timeout" from="wavetimer" to="." method="_on_wavetimer_timeout"]
 [connection signal="fire" from="Player" to="." method="_on_Player_fire"]

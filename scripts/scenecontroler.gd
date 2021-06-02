@@ -28,6 +28,8 @@ var GO = false
 
 	
 func _physics_process(_delta):
+	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
+	$aim.global_position = get_global_mouse_position()
 	fireRate.wait_time = fire_rate
 	if !GO:
 		camerafollow()
@@ -144,6 +146,7 @@ func destroy(body):
 	body.queue_free()
 	
 func damagereduz(_damage):
+	$Bite.play()
 	$Player.life -= 1
 
 func onhit(body):
@@ -183,8 +186,11 @@ func audioManager(index):
 		$breathing.play()
 	elif index == 3:
 		$Moan.play()
+	elif index == 4:
+		$reload.play()
 
 func raiseamm(muni):
+	audioManager(4)
 	if ammo + muni < 20:
 		ammo += muni
 	else:
